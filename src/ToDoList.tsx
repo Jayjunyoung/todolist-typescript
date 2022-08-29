@@ -40,10 +40,11 @@ interface IForm {//타입스크립트 에게 폼의 형식 알려주기
 
 
 function ToDoList() {//0829
-    const { 
+    const { //모든 기능들이 useForm안에 담겨있다
         register , 
         handleSubmit, 
-        formState:{ errors },
+        setValue,
+        formState:{ errors },//에러가 있으면 보여주는 객체
         setError, //에러를 발생시키는 함수
     } = useForm<IForm>({
         defaultValues: {//폼의 기본값 설정
@@ -53,16 +54,25 @@ function ToDoList() {//0829
     //watch: input에 입력된 값 모두 추적
     const onValid = (data: IForm) => {//데이터가 유효할때 발동된다
         if(data.Password !== data.Password1) {//data 인자로 사용
-            setError("Password1", {message : "비밀번호 달라요"});
+            setError(
+            "Password1", 
+            {message : "비밀번호 달라요"}, 
+            {shouldFocus:true});
         }
-        setError("extraError", {message: "서버 해킹"});//전체폼에 대한 에러
+        setValue("Email", "");//Email input값 빈칸으로 놔두기
+        //setError("extraError", {message: "서버 해킹"});//전체폼에 대한 에러
+        //extraError라는 걸 새로 만들어서 추가적인 에러를 발생시킬수 있다
     }
     console.log(errors);//에러가 어디서 났는지 알려줌
 
     //onChange랑 value useState 모두 대체
     //레지스터함수를통해 name에 toDo 라는 객체들감
 
+    //<onValid>
     //데이터가 유효할때 발생하는 onValid 함수 호출(필수)
+    //모든 검증에서 에러가 없었다는걸 의미한다
+
+    //handleSubmit이 발동되어야 모든 validation 수행 
     return <div>
         <form style = {{display:"flex", flexDirection:"column"}} onSubmit={handleSubmit(onValid)}>
             <input {...register("Email", {
@@ -75,15 +85,20 @@ function ToDoList() {//0829
                 placeholder="Email" 
             />
             <span>{errors?.Email?.message} </span>
-            <input {...register("FirstName", {required:"write here"})} 
-            placeholder="First" 
+            <input {...register("FirstName", 
+            {required:"write here", 
+            validate: (value) => value.includes("nico") ? "do not include nico" : true}
+            )} 
+            placeholder="FirstName" 
             />
             <span>{errors?.FirstName?.message} </span>
             <input {...register("LastName", {required:"write here"})} 
-            placeholder="Last" 
+            placeholder="LastName" 
             />
             <span>{errors?.LastName?.message} </span>
-            <input {...register("Username", {required:"write here", minLength: 5})} placeholder="Username" />
+            <input {...register("Username", {required:"write here"})} 
+            placeholder="Username" 
+            />
             <span>{errors?.Username?.message} </span>
             <input {...register("Password", {
                 required:"Password is required", 
