@@ -6,8 +6,3 @@ export const darkTheme :DefaultTheme = {
     accentColor: "#44bd32",
 }
 
-export const lightTheme :DefaultTheme = {
-    bgColor: "whitesmoke",
-    textColor: "black",
-    accentColor: "#44bd32",
-}
