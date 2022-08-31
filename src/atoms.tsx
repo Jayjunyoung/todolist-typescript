@@ -1,7 +1,7 @@
 import { atom, selector } from "recoil";
 
 export enum Categories {
-    "TO_DO" = "TO_DO",
+    "TO_DO" = "TO_DO",//문자열로 지정
     "DOING" = "DOING",
     "DONE" = "DONE",
 }
@@ -20,6 +20,7 @@ export const toDoState = atom<IToDo[]>({
     key: "toDo",
     default: [],
 });
+//셀렉터 개념
 export const toDoSelector = selector({
     key: "toDoSelector",
     get: ({ get }) => {

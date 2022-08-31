@@ -6,8 +6,9 @@ import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
 function ToDoList() {
-    const toDos = useRecoilValue(toDoSelector);
+    const toDos = useRecoilValue(toDoSelector);//동일한카테고리의배열담겨있음
     const [category, setCategory] = useRecoilState(categoryState);
+    //category의 기본값은 To Do임
     const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
         setCategory(event.currentTarget.value as any);
     };
