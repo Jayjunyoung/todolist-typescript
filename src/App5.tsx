@@ -1,18 +1,32 @@
-import { createGlobalStyle} from 'styled-components';
-import ToDoList from './components/ToDoList';
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { hourSelector, minuteState } from "./atom";
 
-
-const GlobalStyle = createGlobalStyle`//css기본값을 설정함
-`;
-
-//<>: fragment -> 여러개의 컴포넌트를 렌더링 하고싶다면
-function App5() {//useRecoilValue: atom과 App을 연결하는 방법
+function App5() {
+    //recoilstate: 첫번째엔 아톰의값 or get함수 값, 두번째에는 아톰을 수정하는 함수 or set함수
+    const [minutes, setMinutes] = useRecoilState(minuteState);
+    const [hours, setHours] = useRecoilState(hourSelector);
+    const onMinutesChange = (event: React.FormEvent<HTMLInputElement>) => {
+        setMinutes(+event.currentTarget.value);
+    };
+    const onHoursChange = (event: React.FormEvent<HTMLInputElement>) => {
+        setHours(+event.currentTarget.value);
+    }
     return (
-        <>
-            <GlobalStyle />
-            <ToDoList />
-        </>
-    );
+        <div>
+            <input
+                value={minutes}
+                onChange={onMinutesChange}
+                type="number"
+                placeholder="Minutes"
+            />
+            <input 
+                value={hours}
+                onChange = {onHoursChange} 
+                type="number" 
+                placeholder="Hours" 
+            />
+        </div>
+    )
 }
-
 export default App5;
