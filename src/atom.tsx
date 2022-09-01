@@ -2,21 +2,17 @@ import { atom, selector } from "recoil";
 
 //type categories = "TO_DO" | "DOING" | "DONE"
 
-export const minuteState = atom({
-    key: "minutes",
-    default: 0,
-});
+interface IToDoState {
+    [key: string]: string[];//확장성 밑에 3개만으로 제한이 아니라
+    //key는 string이고 string으로 이루어진 배열로 가질거야
+}
 
 
-
-export const hourSelector = selector<number>({
-    key: "hours",
-    get: ({ get }) => {
-        const minutes = get(minuteState);
-        return minutes / 60;
-    },//0831
-    set: ({set}, newValue) => {//input은 string이므로 숫자처리
-        const minuites = Number(newValue) * 60;
-        set(minuteState, minuites);//(수정하고싶은 아톰, 바꿀 값) 
-    }
+export const toDoState = atom<IToDoState>({
+    key: "toDo",
+    default: {
+        to_do : ["a", "b"],
+        doing: ["c", "d", "e"],
+        done: ["f"],
+    },
 });

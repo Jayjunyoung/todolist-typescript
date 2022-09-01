@@ -1,0 +1,37 @@
+import {Draggable} from "react-beautiful-dnd"
+import styled from "styled-components";
+import React from "react";
+
+const Card = styled.div<{isDragging: boolean}>`
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 10px 10px;
+    background-color: ${(props) => props.isDragging ? '#74b9ff' : props.theme.cardColor};
+    box-shadow: ${(props) =>
+    props.isDragging ? "0px 2px 5px rgba(0, 0, 0, 0.5)" : "none"};
+`;
+
+interface IDragabbleCardProps {
+    toDo: string;
+    index: number;
+}
+
+function DraggableCard({toDo, index}: IDragabbleCardProps) {
+    console.log(toDo);
+    return (
+        <Draggable key={toDo} draggableId={toDo} index={index}>
+            {(magic, snapshot) => 
+                    <Card 
+                        isDragging={snapshot.isDragging}
+                        ref={magic.innerRef}
+                        {...magic.draggableProps}
+                        {...magic.dragHandleProps}> 
+                            {toDo}
+                    </Card>}
+        </Draggable>
+    )
+}
+//props가 같다면 렌더링하지않도록
+//즉 바뀌는 애들만 바뀌도록 하는것
+//전부 다 렌더링하는건 시간낭비
+export default React.memo(DraggableCard);
