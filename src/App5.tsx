@@ -37,11 +37,12 @@ function App5() {//드래그앤드랍
         if(destination?.droppableId === source.droppableId) {//같은 보드라면
             setToDos(allBoards => {  
                 const boardCopy = [...allBoards[source.droppableId]];
+                const taskObj = boardCopy[source.index];//todo 객체전부를 가져와줄것
                 //[x] : x가 키 즉 source.droppableId가 키
             //기존 복사한거에서 삭제 하나하기
             boardCopy.splice(source.index, 1);
             //삭제한걸 원하는 위치에 넣기
-            boardCopy.splice(destination?.index, 0 , draggableId);
+            boardCopy.splice(destination?.index, 0 , taskObj);
             return {//세개 중 바뀌는 하나만 보여지게
                 ...allBoards,//모든 board들을 가져와
                 [source.droppableId]: boardCopy,//복사본이라고 알려주는것
@@ -51,9 +52,11 @@ function App5() {//드래그앤드랍
         if(destination.droppableId !== source.droppableId) {
             setToDos((allBoards) => {//다른 보드로넘어갈땐 복사본 2개필요
                 const sourceBoard = [...allBoards[source.droppableId]];
+                const taskObj = sourceBoard[source.index];//todo 객체전부를 가져와줄것
+
                 const destinationBoard = [...allBoards[destination.droppableId]];
                 sourceBoard.splice(source.index, 1);
-                destinationBoard.splice(destination?.index, 0 , draggableId);
+                destinationBoard.splice(destination?.index, 0 , taskObj);
                 return {
                     ...allBoards,//이전의 보드들
                     [source.droppableId]: sourceBoard,
