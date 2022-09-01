@@ -10,7 +10,7 @@ function App5() {
         setMinutes(+event.currentTarget.value);
     };
     const onHoursChange = (event: React.FormEvent<HTMLInputElement>) => {
-        setHours(+event.currentTarget.value);
+        setHours(+event.currentTarget.value);//set함수 발동
     }
     return (
         <div>
