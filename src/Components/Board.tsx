@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ITodo, toDoState } from "../atom";
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState , useRecoilState} from 'recoil';
 import { useEffect } from 'react';
 
 const Wrapper = styled.div`
@@ -65,7 +65,7 @@ interface IForm {
 const toDolist = "toDolist"
 
 function Board({toDos, boardId}: IBordprops) {
-    const setToDos = useSetRecoilState(toDoState);
+    const [Todos, setToDos] = useRecoilState(toDoState);
     const { register, setValue, handleSubmit } = useForm<IForm>();
     const onValid = ({ toDo }: IForm) => {
         const newToDo = {//이걸 적용시키기위해  setrecoilstate이용 함수 이용
@@ -84,8 +84,8 @@ function Board({toDos, boardId}: IBordprops) {
         setValue("toDo", "");//form의 값을 다시 공백으로 설정
     };
     useEffect(() => {
-        localStorage.setItem(toDolist, JSON.stringify(setToDos));
-    }, [setToDos]);
+        localStorage.setItem(toDolist, JSON.stringify(Todos));
+    }, [Todos]);
     const inputRef = useRef<HTMLInputElement>(null);//input과 연결
     const onClick = () => {
         inputRef.current?.focus();
