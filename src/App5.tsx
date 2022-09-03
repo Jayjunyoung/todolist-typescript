@@ -1,9 +1,10 @@
-import {DragDropContext, DropResult} from "react-beautiful-dnd";
-import { useRecoilState } from 'recoil';
+import {DragDropContext, DropResult, DragStart} from "react-beautiful-dnd";
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from "styled-components";
 import { toDoState } from './atom';
 import Board from "./Components/Board";
-
+import {trashState} from "./atom";
+import TrashCan from './Components/TrashCan';
 
 const Wrapper = styled.div`
     display: flex;
@@ -30,6 +31,10 @@ const Boards = styled.div`
 
 
 function App5() {//드래그앤드랍
+    const setTrashCan = useSetRecoilState(trashState);
+    const onBeforeDragStart = (info: DragStart) => {
+    if (info.type === 'DEFAULT') setTrashCan(true);
+    };
     const [toDos, setToDos] = useRecoilState(toDoState);
     const onDragEnd = (info: DropResult) => {
         const {destination, draggableId, source} = info;
@@ -37,7 +42,7 @@ function App5() {//드래그앤드랍
         if(destination?.droppableId === source.droppableId) {//같은 보드라면
             setToDos(allBoards => {  
                 const boardCopy = [...allBoards[source.droppableId]];
-                const taskObj = boardCopy[source.index];//todo 객체전부를 가져와줄것
+                const taskObj = boardCopy[source.index];//이동시작한 위치의 todo 가져옴
                 //[x] : x가 키 즉 source.droppableId가 키
             //기존 복사한거에서 삭제 하나하기
             boardCopy.splice(source.index, 1);
@@ -49,8 +54,9 @@ function App5() {//드래그앤드랍
             }
         });//a,b,c,d이런게 draggableId임 
         }
+        //다른 보드로 넘어갈땐
         if(destination.droppableId !== source.droppableId) {
-            setToDos((allBoards) => {//다른 보드로넘어갈땐 복사본 2개필요
+            setToDos((allBoards) => {//다른 보드로넘어갈땐 보드 복사본 2개필요
                 const sourceBoard = [...allBoards[source.droppableId]];
                 const taskObj = sourceBoard[source.index];//todo 객체전부를 가져와줄것
 
@@ -69,11 +75,14 @@ function App5() {//드래그앤드랍
     //droppable,draggable의 자식요소는 함수여야함
     //droppable은 1개이다.
     //context 부분으로 감싼 영역이 드래그앤드랍이된다
-    return <DragDropContext onDragEnd={onDragEnd}>
+    //Board 컴포넌트로 바뀐 toDos를 보내주기
+    return <DragDropContext onDragEnd={onDragEnd}
+        onBeforeDragStart={onBeforeDragStart}>
         <Wrapper>
             <Boards>
                 {Object.keys(toDos).map(boardId => <Board boardId={boardId} key = {boardId} toDos={toDos[boardId]} />)}
             </Boards>
+            <TrashCan />
         </Wrapper>
     </DragDropContext>
 }//Board끝에 placrholder함으로써 Board화면 안변하도록 하기

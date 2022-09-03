@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ITodo, toDoState } from "../atom";
 import { useSetRecoilState } from 'recoil';
+import { useEffect } from 'react';
 
 const Wrapper = styled.div`
     width: 300px;
@@ -28,7 +29,7 @@ const Area = styled.div<IAreaProps>`
     props.isDraggingOver 
     ? 
     '#dfe6e9' 
-    : props.isDraggingFromThis 
+    : props.isDraggingFromThis //시작한 지점
     ? '#b2bec3' 
     : 'transparent'};
     flex-grow: 1;//flex넓이
@@ -38,13 +39,16 @@ const Area = styled.div<IAreaProps>`
 
 const Form = styled.form`
     width: 100%;
+    display:flex;
+    justify-content:center;
     input {
-        width: 100%;
+        width: 80%;
+        border-radius: 5px;
     }
 `;
 
 interface IBordprops {
-    toDos: ITodo[],//문자로 이루어진 배열로 자료형 정해주기
+    toDos: ITodo[],//객체로 이루어진 배열로 자료형 정해주기
     boardId: string,
 }
 
@@ -57,25 +61,31 @@ interface IForm {
     toDo: string;
 }
 
+
+const toDolist = "toDolist"
+
 function Board({toDos, boardId}: IBordprops) {
     const setToDos = useSetRecoilState(toDoState);
     const { register, setValue, handleSubmit } = useForm<IForm>();
     const onValid = ({ toDo }: IForm) => {
         const newToDo = {//이걸 적용시키기위해  setrecoilstate이용 함수 이용
             id: Date.now(),
-            text: toDo,
+            text: toDo,//form에 입력되는 string
         }
         setToDos(allBoards => {//이전의 배열가져와
             return {
-                ...allBoards,//이전의배열들
+                ...allBoards,//이전의 보드배열들 ex To do
                 [boardId]: [
-                    ...allBoards[boardId],//객체배열
+                    ...allBoards[boardId],//객체배열 ex) doing
                 newToDo,//새로추가된것    
                 ],//현재 우리가 있는 done todo같은 board들 리턴
             }
         });
         setValue("toDo", "");//form의 값을 다시 공백으로 설정
     };
+    useEffect(() => {
+        localStorage.setItem(toDolist, JSON.stringify(setToDos));
+    }, [setToDos]);
     const inputRef = useRef<HTMLInputElement>(null);//input과 연결
     const onClick = () => {
         inputRef.current?.focus();
@@ -115,5 +125,7 @@ function Board({toDos, boardId}: IBordprops) {
         </Wrapper>
     );
 }
+
+
 
 export default Board
