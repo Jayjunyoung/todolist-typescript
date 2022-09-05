@@ -52,6 +52,7 @@ interface IBordprops {
     boardId: string,
 }
 
+
 interface IAreaProps {
     isDraggingFromThis: boolean;
     isDraggingOver: boolean;
@@ -62,7 +63,7 @@ interface IForm {
 }
 
 
-const toDolist = "toDolist"
+const toDolist = "toDolist";
 
 function Board({toDos, boardId}: IBordprops) {
     const [Todos, setToDos] = useRecoilState(toDoState);
@@ -86,6 +87,12 @@ function Board({toDos, boardId}: IBordprops) {
     useEffect(() => {
         localStorage.setItem(toDolist, JSON.stringify(Todos));
     }, [Todos]);
+
+    const savedValue = localStorage.getItem(toDolist);
+    if (savedValue !== null) {
+        const saved = JSON.parse(savedValue);
+        
+    }
     const inputRef = useRef<HTMLInputElement>(null);//input과 연결
     const onClick = () => {
         inputRef.current?.focus();
@@ -100,7 +107,7 @@ function Board({toDos, boardId}: IBordprops) {
         <input
             {...register("toDo", { required: true })}
             type="text"
-            placeholder={`Add task on ${boardId}`}
+            placeholder={`Write ${boardId}`}
         />
         </Form>
         <Droppable droppableId={boardId}>
