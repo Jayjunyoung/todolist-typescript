@@ -1,5 +1,5 @@
 import {DragDropContext, DropResult, DragStart} from "react-beautiful-dnd";
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import styled from "styled-components";
 import { toDoState } from './atom';
 import Board from "./Components/Board";
@@ -32,6 +32,8 @@ const Boards = styled.div`
 
 function App5() {//드래그앤드랍
     const setTrashCan = useSetRecoilState(trashState);
+    const resetTodos = useResetRecoilState(toDoState);
+
     const onBeforeDragStart = (info: DragStart) => {
     if (info.type === 'DEFAULT') setTrashCan(true);
     };
@@ -82,6 +84,7 @@ function App5() {//드래그앤드랍
             <Boards>
                 {Object.keys(toDos).map(boardId => <Board boardId={boardId} key = {boardId} toDos={toDos[boardId]} />)}
             </Boards>
+            <button onClick={resetTodos}>Reset</button>
             <TrashCan />
         </Wrapper>
     </DragDropContext>
