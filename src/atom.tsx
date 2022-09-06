@@ -15,8 +15,6 @@ export interface ITodo {//이건 객체임
     text: string;
 }
 
-//쓰레기통 객체랑 , 배열
-
 
 
 //setSelf, onSet에 콜백함수 파라미터 전달
@@ -43,6 +41,11 @@ const localStorageEffect = (key:string):AtomEffect<IToDoState> => ({setSelf, onS
     });
 };
 
+export const trashState = atom({
+        key: "trash",
+        default: [],
+    }
+)
 
 
 export const toDoState = atom<IToDoState>({

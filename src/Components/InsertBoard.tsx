@@ -49,7 +49,7 @@ function InsertBoard() {
             placeholder={`Add board`}
             />
         </Form>
-    </>
+        </>
     );
 }
 

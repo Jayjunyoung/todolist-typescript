@@ -78,7 +78,7 @@ function App5() {//드래그앤드랍
 
     //droppable,draggable의 자식요소는 함수여야함
     //droppable은 1개이다.
-    //context 부분으로 감싼 영역이 드래그앤드랍이된다
+    //context 부분으로 감싼 영역이 드래그앤드랍의 적용범위가 된다
     //Board 컴포넌트로 바뀐 toDos를 보내주기
     return <DragDropContext onDragEnd={onDragEnd}>
         <Wrapper>
