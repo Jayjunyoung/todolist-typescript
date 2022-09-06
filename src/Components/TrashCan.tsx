@@ -1,11 +1,11 @@
 import {FaTrash} from "react-icons/fa";
 import styled from "styled-components";
-import {DragDropContext, Droppable, DropResult} from "react-beautiful-dnd";
+import {DragDropContext, Draggable, Droppable, DropResult} from "react-beautiful-dnd";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { trashState } from '../atom';
 
 
-const TrashWrapper = styled.div`
+
+const TrashWrapper = styled.div`//쓰레기통 위치
     position: absolute;
     bottom: 25px;
     right: 65px;
@@ -16,24 +16,14 @@ const TrashWrapper = styled.div`
 
 
 function TrashCan()  {
-    const trash = useRecoilValue(trashState);
     const onDragEnd = (info: DropResult) => {
-        
+
     }
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="trash"> 
-            {(magic) => (
-                <TrashWrapper
-                ref={magic.innerRef} 
-                {...magic.droppableProps}>
+                <TrashWrapper>
                     <FaTrash className='icon' size="30"/>
                 </TrashWrapper>
-                )
-            }
-            </Droppable>    
             
-        </DragDropContext>
     );
 }
 

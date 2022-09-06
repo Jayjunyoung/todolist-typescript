@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { ITodo, toDoState } from "../atom";
-import { useSetRecoilState , useRecoilState} from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { useEffect } from 'react';
 
 const Wrapper = styled.div`
@@ -65,8 +65,8 @@ interface IForm {
 
 const toDolist = "toDolist";
 
-function Board({toDos, boardId}: IBordprops) {
-    const [Todos, setToDos] = useRecoilState(toDoState);
+function Board({toDos, boardId}: IBordprops) {//보드에 추가되는걸 구현하느것
+    const setToDos = useSetRecoilState(toDoState);
     const { register, setValue, handleSubmit } = useForm<IForm>();
     const onValid = ({ toDo }: IForm) => {
         const newToDo = {//이걸 적용시키기위해  setrecoilstate이용 함수 이용
@@ -76,7 +76,7 @@ function Board({toDos, boardId}: IBordprops) {
         setToDos(allBoards => {//이전의 배열가져와
             return {
                 ...allBoards,//이전의 보드배열들 ex To do
-                [boardId]: [
+                [boardId]: [//ITodoState에서 정의한거처럼 [key] : ITodo[]로 정의 
                     ...allBoards[boardId],//객체배열 ex) doing
                 newToDo,//새로추가된것    
                 ],//현재 우리가 있는 done todo같은 board들 리턴
@@ -84,15 +84,7 @@ function Board({toDos, boardId}: IBordprops) {
         });
         setValue("toDo", "");//form의 값을 다시 공백으로 설정
     };
-    useEffect(() => {
-        localStorage.setItem(toDolist, JSON.stringify(Todos));
-    }, [Todos]);
 
-    const savedValue = localStorage.getItem(toDolist);
-    if (savedValue !== null) {
-        const saved = JSON.parse(savedValue);
-        
-    }
     const inputRef = useRef<HTMLInputElement>(null);//input과 연결
     const onClick = () => {
         inputRef.current?.focus();
@@ -112,7 +104,7 @@ function Board({toDos, boardId}: IBordprops) {
         </Form>
         <Droppable droppableId={boardId}>
             {(magic, snapshot) => (//스냅샷을 이용해 드래깅 됬을때 색깔 바꾸기
-                <Area 
+                <Area //보드 배경색
                 isDraggingOver={snapshot.isDraggingOver}
                 isDraggingFromThis={Boolean(snapshot.draggingFromThisWith)}
                 ref={magic.innerRef} 

@@ -1,10 +1,10 @@
 import {DragDropContext, DropResult, DragStart} from "react-beautiful-dnd";
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState , useResetRecoilState} from 'recoil';
 import styled from "styled-components";
 import { toDoState } from './atom';
 import Board from "./Components/Board";
-import {trashState} from "./atom";
 import TrashCan from './Components/TrashCan';
+import InsertBoard from './Components/InsertBoard';
 
 const Wrapper = styled.div`
     display: flex;
@@ -19,22 +19,26 @@ const Boards = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
     width: 100%;
+`;
+
+const Button = styled.button`
+    background-color: white;
+    position: absolute;
+    top: 25px;
+    left: 65px;
+    width: 50px;
+    height: 40px;
+    border-radius: 5px;
 `;
 
 
 
 
 
-
-
-
 function App5() {//드래그앤드랍
-    const setTrashCan = useSetRecoilState(trashState);
-    const onBeforeDragStart = (info: DragStart) => {
-    if (info.type === 'DEFAULT') setTrashCan(true);
-    };
+    const resetTodos = useResetRecoilState(toDoState);
     const [toDos, setToDos] = useRecoilState(toDoState);
     const onDragEnd = (info: DropResult) => {
         const {destination, draggableId, source} = info;
@@ -76,12 +80,13 @@ function App5() {//드래그앤드랍
     //droppable은 1개이다.
     //context 부분으로 감싼 영역이 드래그앤드랍이된다
     //Board 컴포넌트로 바뀐 toDos를 보내주기
-    return <DragDropContext onDragEnd={onDragEnd}
-        onBeforeDragStart={onBeforeDragStart}>
+    return <DragDropContext onDragEnd={onDragEnd}>
         <Wrapper>
             <Boards>
                 {Object.keys(toDos).map(boardId => <Board boardId={boardId} key = {boardId} toDos={toDos[boardId]} />)}
             </Boards>
+            <Button onClick={resetTodos}>Reset</Button>
+            <InsertBoard />
             <TrashCan />
         </Wrapper>
     </DragDropContext>
