@@ -74,6 +74,20 @@ function App5() {//드래그앤드랍
                 }
             });
         }
+        if(destination.droppableId === "trash") {
+            setToDos((boards) => {
+                const startBoard = [...boards[source.droppableId]]
+                const departure = [...boards[destination.droppableId]];
+                const taskObj2 = startBoard[source.index];//board안에서 해당하는 index의 카드를 고르는것
+                startBoard.splice(source.index, 1);
+                departure.splice(destination?.index, 0 , taskObj2);
+                return {
+                    ...boards,//이전의 보드들
+                    [source.droppableId]: startBoard,
+                    [destination.droppableId]: departure,
+                }
+            });
+        }
     };//드랍할때 적용되는 함수
 
     //droppable,draggable의 자식요소는 함수여야함

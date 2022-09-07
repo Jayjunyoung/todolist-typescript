@@ -1,4 +1,4 @@
-import {Draggable} from "react-beautiful-dnd"
+import {Draggable,DragStart} from "react-beautiful-dnd"
 import styled from "styled-components";
 import React from "react";
 
