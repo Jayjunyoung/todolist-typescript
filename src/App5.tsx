@@ -1,4 +1,4 @@
-import {DragDropContext, DropResult, DragStart} from "react-beautiful-dnd";
+import {DragDropContext, DropResult} from "react-beautiful-dnd";
 import { useRecoilState, useSetRecoilState , useResetRecoilState} from 'recoil';
 import styled from "styled-components";
 import { toDoState } from './atom';
@@ -56,7 +56,7 @@ function App5() {//드래그앤드랍
                 ...allBoards,//모든 board들을 가져와
                 [source.droppableId]: boardCopy,//복사본이라고 알려주는것
             }
-        });//a,b,c,d이런게 draggableId임 
+            });//a,b,c,d이런게 draggableId임 
         }
         //다른 보드로 넘어갈땐
         if(destination.droppableId !== source.droppableId) {

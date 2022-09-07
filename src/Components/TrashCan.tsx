@@ -1,9 +1,9 @@
 import {FaTrash} from "react-icons/fa";
 import styled from "styled-components";
-import {DragDropContext, Draggable, Droppable, DropResult} from "react-beautiful-dnd";
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { ITodo, toDoState} from '../atom';
-import DragabbleCard from './DraggableCard';
+import {Droppable} from "react-beautiful-dnd";
+
+;
+
 
 
 

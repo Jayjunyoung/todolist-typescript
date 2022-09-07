@@ -1,7 +1,7 @@
 import {Draggable,DragStart, DropResult} from "react-beautiful-dnd"
 import styled from "styled-components";
 import React from "react";
-import { useSetRecoilState } from 'recoil';
+
 
 
 const Card = styled.div<{isDragging: boolean}>`
