@@ -1,6 +1,8 @@
-import {Draggable,DragStart} from "react-beautiful-dnd"
+import {Draggable,DragStart, DropResult} from "react-beautiful-dnd"
 import styled from "styled-components";
 import React from "react";
+import { useSetRecoilState } from 'recoil';
+import { toDoState, trashState } from '../atom';
 
 const Card = styled.div<{isDragging: boolean}>`
     border-radius: 5px;
@@ -18,8 +20,28 @@ interface IDragabbleCardProps {
 }
 
 function DraggableCard({toDoId, toDoText, index}: IDragabbleCardProps) {
+    const setTodos = useSetRecoilState(toDoState);
+    const trashTodo = useSetRecoilState(trashState);
+    const onDragEnd = (info: DropResult) => {
+        const {destination, droppableId, source} = info;
+        if(destination.droppableId === "trash") {
+            setTodos((boards) => {
+                const startBoard = [...boards[source.droppableId]]
+                const departure = [...boards[destination.droppableId]];
+                const taskObj2 = startBoard[source.index];//board안에서 해당하는 index의 카드를 고르는것
+                startBoard.splice(source.index, 1);
+                departure.splice(destination?.index, 0 , taskObj2);
+                return {
+                    ...boards,//이전의 보드들
+                    [source.droppableId]: startBoard,
+                    [destination.droppableId]: departure,
+                }
+            });
+        }
+    }
     return (
-        <Draggable draggableId={toDoId+ ""} index={index}>
+        <Draggable draggableId={toDoId+ ""} index={index}
+        onDragEnd={onDragEnd}>
             {(magic, snapshot) => 
                     <Card 
                         isDragging={snapshot.isDragging}
