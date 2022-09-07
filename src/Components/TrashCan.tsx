@@ -2,7 +2,8 @@ import {FaTrash} from "react-icons/fa";
 import styled from "styled-components";
 import {DragDropContext, Draggable, Droppable, DropResult} from "react-beautiful-dnd";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { toDoState, trashState } from '../atom';
+import { ITodo, toDoState, trashState } from '../atom';
+import DragabbleCard from './DraggableCard';
 
 
 
@@ -15,9 +16,8 @@ const TrashWrapper = styled.div`//쓰레기통 위치
 `;
 
 
-
 function TrashCan()  {
-    const trashToDos = useRecoilValue(trashState); 
+    const trashToDos = useSetRecoilState(trashState); 
     
     return (
             <Droppable droppableId="trash">
