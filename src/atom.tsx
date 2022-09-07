@@ -41,13 +41,7 @@ const localStorageEffect = (key:string):AtomEffect<IToDoState> => ({setSelf, onS
     });
 };
 
-export const trashState = atom<IToDoState>({
-        key: "trash",
-        default: {
-            "trash" : [],
-        },
-    }
-)
+
 
 
 export const toDoState = atom<IToDoState>({

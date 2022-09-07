@@ -2,7 +2,7 @@ import {Draggable,DragStart, DropResult} from "react-beautiful-dnd"
 import styled from "styled-components";
 import React from "react";
 import { useSetRecoilState } from 'recoil';
-import { trashState } from '../atom';
+
 
 const Card = styled.div<{isDragging: boolean}>`
     border-radius: 5px;
