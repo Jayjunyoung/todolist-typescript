@@ -43,6 +43,15 @@ function App5() {//드래그앤드랍
     const onDragEnd = (info: DropResult) => {
         const {destination, draggableId, source} = info;
         if(!destination) return;
+        if(destination.droppableId === "trash") {
+            setToDos((allBoards) => {
+                return {
+                    ...allBoards,//이전의 보드들
+                    [source.droppableId]: allBoards[source.droppableId].filter((v,i) => i !== source.index)
+                }
+            });
+            return; //함수를 중단 시키는 용도
+        }
         if(destination?.droppableId === source.droppableId) {//같은 보드라면
             setToDos(allBoards => {  
                 const boardCopy = [...allBoards[source.droppableId]];
@@ -59,6 +68,21 @@ function App5() {//드래그앤드랍
             });//a,b,c,d이런게 draggableId임 
         }
         //다른 보드로 넘어갈땐
+        if(destination.droppableId !== source.droppableId) {
+            setToDos((allBoards) => {//다른 보드로넘어갈땐 보드 복사본 2개필요
+                const sourceBoard = [...allBoards[source.droppableId]];
+                const taskObj = sourceBoard[source.index];//todo 객체전부를 가져와줄것
+
+                const destinationBoard = [...allBoards[destination.droppableId]];
+                sourceBoard.splice(source.index, 1);
+                destinationBoard.splice(destination?.index, 0 , taskObj);
+                return {
+                    ...allBoards,//이전의 보드들
+                    [source.droppableId]: sourceBoard,
+                    [destination.droppableId]: destinationBoard,
+                }
+            });
+        }
         if(destination.droppableId !== source.droppableId) {
             setToDos((allBoards) => {//다른 보드로넘어갈땐 보드 복사본 2개필요
                 const sourceBoard = [...allBoards[source.droppableId]];

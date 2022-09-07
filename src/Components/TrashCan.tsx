@@ -17,7 +17,6 @@ const TrashWrapper = styled.div`//쓰레기통 위치
 
 
 function TrashCan()  {
-    
     return (
             <Droppable droppableId="trash">
                 {(magic) => (
