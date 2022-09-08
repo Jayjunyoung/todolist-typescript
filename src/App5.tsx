@@ -40,11 +40,11 @@ const Button = styled.button`
 function App5() {//드래그앤드랍
     const resetTodos = useResetRecoilState(toDoState);
     const [toDos, setToDos] = useRecoilState(toDoState);
-    const onDragEnd = (info: DropResult) => {
+    const onDragEnd = (info: DropResult) => {//드래그가 끝나고 드랍할때 이루어지는 로직
         const {destination, draggableId, source} = info;
         if(!destination) return;
         if(destination.droppableId === "trash") {
-            setToDos((allBoards) => {
+            setToDos((allBoards) => {//모든 보드들을 가져와
                 return {
                     ...allBoards,//이전의 보드들
                     [source.droppableId]: allBoards[source.droppableId].filter((v,i) => i !== source.index)

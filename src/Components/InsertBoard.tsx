@@ -5,6 +5,7 @@ import { toDoState } from "../atom";
 
 
 
+
 const Form = styled.form`
     position: absolute;
     top: 120px;
@@ -42,13 +43,13 @@ function InsertBoard() {
     };
     return (
         <>
-        <Form onSubmit={handleSubmit(onValid)}>
-            <Input
-            {...register("board", { required: true })}
-            type="text"
-            placeholder={`Add board`}
+            <Form onSubmit={handleSubmit(onValid)}>
+                <Input
+                {...register("board", { required: true })}
+                type="text"
+                placeholder={`Add board`}
             />
-        </Form>
+            </Form>
         </>
     );
 }

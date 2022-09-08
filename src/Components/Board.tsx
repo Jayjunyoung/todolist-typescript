@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 const Title = styled.h2`
     text-align: center;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 23px;
     font-size: 18px;
 `;
 
@@ -112,6 +112,7 @@ function Board({toDos, boardId}: IBordprops) {//보드에 추가되는걸 구현
                 >
                     {toDos.map((toDo, index) => (//객체로 이루어진 배열 maping
                     <DragabbleCard 
+                    boardId={boardId}
                     key={toDo.id} //객체이므로 toDo.id
                     index={index} 
                     toDoId={toDo.id}
