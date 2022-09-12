@@ -112,7 +112,7 @@ function Board({toDos, boardId}: IBordprops) {//보드에 추가되는걸 구현
                 >
                     {toDos.map((toDo, index) => (//객체로 이루어진 배열 maping
                     <DragabbleCard 
-                    boardId={boardId}
+                    boardId={boardId} //보드를 구분하기 위한 아이디까지 넘겨주기
                     key={toDo.id} //객체이므로 toDo.id
                     index={index} 
                     toDoId={toDo.id}

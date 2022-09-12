@@ -49,7 +49,7 @@ export const trashState = atom({
 
 
 export const toDoState = atom<IToDoState>({
-    key: "toDo",
+    key: "toDo",//todolist를 담당하는 키
     default: {
         "To Do": [],
         Doing: [],
