@@ -40,6 +40,7 @@ const Button = styled.button`
 function App5() {//드래그앤드랍
     const resetTodos = useResetRecoilState(toDoState);
     const [toDos, setToDos] = useRecoilState(toDoState);
+    console.log(toDos);
     const onDragEnd = (info: DropResult) => {//드래그가 끝나고 드랍할때 이루어지는 로직
         const {destination, draggableId, source} = info;
         if(!destination) return;

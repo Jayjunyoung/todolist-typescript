@@ -115,7 +115,7 @@ function Board({toDos, boardId}: IBordprops) {//보드에 추가되는걸 구현
                     boardId={boardId} //보드를 구분하기 위한 아이디까지 넘겨주기
                     key={toDo.id} //객체이므로 toDo.id
                     index={index} 
-                    toDoId={toDo.id}
+                    toDoId={toDo.id}//객체로 새로운카드가 추가되기때문에 객체로 넘겨주기
                     toDoText={toDo.text} />
                 ))}
                     {magic.placeholder}

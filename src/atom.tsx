@@ -55,5 +55,5 @@ export const toDoState = atom<IToDoState>({
         Doing: [],
         Done: [],
     },
-    effects: [localStorageEffect('toDolist')],
+    effects: [localStorageEffect('toDolist')],//부가효과를 집어넣은것 toDolist라는 키 전달
 });

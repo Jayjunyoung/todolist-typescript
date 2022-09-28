@@ -46,7 +46,7 @@ function DraggableCard({toDoId, toDoText, index, boardId}: IDragabbleCardProps) 
             const board = [...allboards[boardId]]
             board.splice(e.currentTarget as any, 1);//시작 위치, 자를 갯수
             return {
-                ...allboards,
+                ...allboards,//기존의 배열들
                 [boardId] : board,//board: 선택한 카드를 제외한 보드를 의미한다. 
             }
         });
