@@ -21,7 +21,7 @@ export interface ITodo {//이건 객체임
 const localStorageEffect = (key:string):AtomEffect<IToDoState> => ({setSelf, onSet}) => {
     // 초기값(default)를 설정하기 전 localStorage에 저장된 값을 찾아봅니다.
     const savedValue = localStorage.getItem(key)
-
+    console.log(savedValue);
     // 로컬스토리지의 초기값이 있다면 이를 atom의 default로 설정하고, 그렇지 않다면 atom의 default를 사용합니다.
     if (savedValue != null) {
         setSelf(JSON.parse(savedValue));
@@ -55,5 +55,5 @@ export const toDoState = atom<IToDoState>({
         Doing: [],
         Done: [],
     },
-    effects: [localStorageEffect('toDolist')],//부가효과를 집어넣은것 toDolist라는 키 전달
+    effects: [localStorageEffect("toDo")],//부가효과를 집어넣은것 toDolist라는 키 전달
 });
