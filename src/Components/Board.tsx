@@ -66,6 +66,7 @@ interface IForm {
 const toDolist = "toDolist";
 
 function Board({toDos, boardId}: IBordprops) {//보드에 추가되는걸 구현하느것
+    console.log({toDos});
     const setToDos = useSetRecoilState(toDoState);
     const { register, setValue, handleSubmit } = useForm<IForm>();
     const onValid = ({ toDo }: IForm) => {

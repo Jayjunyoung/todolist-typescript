@@ -69,21 +69,7 @@ function App5() {//드래그앤드랍
             });//a,b,c,d이런게 draggableId임 
         }
         //다른 보드로 넘어갈땐
-        if(destination.droppableId !== source.droppableId) {
-            setToDos((allBoards) => {//다른 보드로넘어갈땐 보드 복사본 2개필요
-                const sourceBoard = [...allBoards[source.droppableId]];
-                const taskObj = sourceBoard[source.index];//todo 객체전부를 가져와줄것
-
-                const destinationBoard = [...allBoards[destination.droppableId]];
-                sourceBoard.splice(source.index, 1);
-                destinationBoard.splice(destination?.index, 0 , taskObj);
-                return {
-                    ...allBoards,//이전의 보드들
-                    [source.droppableId]: sourceBoard,
-                    [destination.droppableId]: destinationBoard,
-                }
-            });
-        }
+        
         if(destination.droppableId !== source.droppableId) {
             setToDos((allBoards) => {//다른 보드로넘어갈땐 보드 복사본 2개필요
                 const sourceBoard = [...allBoards[source.droppableId]];
