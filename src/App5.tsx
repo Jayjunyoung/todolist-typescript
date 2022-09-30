@@ -24,6 +24,7 @@ const Boards = styled.div`
 `;
 
 const Button = styled.button`
+    cursor: pointer;
     background-color: white;
     position: absolute;
     top: 25px;

@@ -7,18 +7,20 @@ import { toDoState } from "../atom";
 
 
 const Form = styled.form`
-    position: absolute;
+    position: fixed;
     top: 120px;
-    left: 65px;
+    left: 0px;
+    right: 0px;
+    margin: 0 auto;
     width: 300px;
 `;
 
 const Input = styled.input`
-    width: 80%;
+    width: 100%;
+    height: 100%;
     padding: 10px;
     border-style: none;
     border-radius: 5px;
-    margin-bottom: 16px;
     outline: none;
 `;
 
