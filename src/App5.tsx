@@ -50,7 +50,7 @@ function App5() {//드래그앤드랍
                 return {
                     ...allBoards,//이전의 보드들
                     [source.droppableId]: allBoards[source.droppableId].filter((v,i) => i !== source.index)
-                }
+                }//filter: 조건에 맞지않은 원소를 제거한 배열을 리턴한다.
             });
             return; //함수를 중단 시키는 용도
         }
